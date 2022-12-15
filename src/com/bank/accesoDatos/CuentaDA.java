@@ -1,14 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bank.accesoDatos;
 
-/**
- *
- * @author Reizewr
- */
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+
 public class CuentaDA {
-    
+        public ResultSet getCuenta (int numeroCuenta){
+        DBConnect dbCtx = new DBConnect(); 
+        String st = "SELECT NUMERO_CUENTA, TIPO_CUENTA, SALDO FROM CUENTA WHERE NUMERO_CUENTA = ?";
+        ResultSet rs;
+        try{
+            PreparedStatement pst = dbCtx.getConnection().prepareStatement(st);
+            pst.setInt(1, numeroCuenta);
+            rs=pst.executeQuery();
+            return rs;
+        }
+        catch(SQLException e){
+            System.out.println("error: " + e.getMessage());
+            return null;
+        } 
+    }
 }
