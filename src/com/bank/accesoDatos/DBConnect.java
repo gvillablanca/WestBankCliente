@@ -21,7 +21,6 @@ public class DBConnect {
             String user = propiedades.getProperty("user");
             String pass = propiedades.getProperty("pass");
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println(" Se ha establecido la conexión");
         }
         catch(ClassNotFoundException ex){
             System.out.println("Error: " + ex.getMessage());

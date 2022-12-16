@@ -53,8 +53,7 @@ public class FuncionesBanco {
                 Cliente cliente = new Cliente();
                 cliente.getCliente(rutInt, dv, clave);
 
-                if(cliente.getRut() != 0){
-                    System.out.println(cliente); 
+                if(cliente.getRut() != 0){ 
                     return true;
                 }
                 else{
@@ -79,7 +78,6 @@ public class FuncionesBanco {
             cuenta.obtener(numeroCuenta);
                      
             if(cuenta.getNumeroCuenta() != 0){
-                System.out.println(cuenta);
                 return true;
             }
             else{
@@ -98,7 +96,6 @@ public class FuncionesBanco {
             historial.obtener(numeroCuenta);
                       
             if(historial.getNumeroCuenta()!= 0){
-                System.out.println(historial); 
                 return true;
             }
             else{

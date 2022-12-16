@@ -1,23 +1,70 @@
 package com.bank.ui;
 
+import com.bank.accesoDatos.HistorialDA;
 import com.bank.negocio.Cliente;
 import com.bank.negocio.Cuenta;
 import com.bank.negocio.Historial;
 import com.bank.operaciones.FuncionesMenu;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.Properties;
+import javax.swing.table.DefaultTableModel;
 
 public class HistorialUI extends javax.swing.JFrame {
     Cliente cliente;
     public HistorialUI(Cliente cliente) {
         this.cliente = cliente;
         initComponents();
+        Date fecha = new Date();
+        lb_fechaSys.setText(fecha.toString());
         cliente.getCliente(cliente.getRut(), cliente.getDv(), cliente.getClave());
         Cuenta cuenta = new Cuenta();
-        cuenta.obtener(cliente.getNumeroCuenta());
+        cuenta.obtener(cliente.getNumeroCuenta());  
+        getHistorial(cliente.getNumeroCuenta());
+    }
+    
+    public void getHistorial (int numeroCuenta){
+        try{
+            DefaultTableModel tablahistorial = (DefaultTableModel)tbl_historial.getModel();
+            InputStream entrada = new FileInputStream("../WestBankCliente/src/com/bank/accesoDatos/app.properties");
+            Properties propiedades = new Properties();
+            propiedades.load(entrada);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = propiedades.getProperty("url");
+            String user = propiedades.getProperty("user");
+            String pass = propiedades.getProperty("pass");
+            Connection conn = DriverManager.getConnection(url, user, pass);
         
-        Historial historial = new Historial();
-        historial.obtener(cliente.getNumeroCuenta());
-        
-        
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT COD_TRX, NUMERO_CUENTA, MONTO, NUMERO_CUENTA_DES, FECHA_TRX FROM HISTORIAL_CLIENTE WHERE NUMERO_CUENTA =" + numeroCuenta);
+            
+            while(rs.next()){
+                Object[] datosFila = {rs.getInt(1) ,rs.getInt(2),rs.getInt(3),rs.getInt(4), rs.getString(5)};
+                tablahistorial.addRow(datosFila);
+            }
+           
+        }
+        catch(ClassNotFoundException ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
+        catch(SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
+        catch(FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        } 
     }
 
     @SuppressWarnings("unchecked")
@@ -30,9 +77,9 @@ public class HistorialUI extends javax.swing.JFrame {
         btn_historial = new javax.swing.JButton();
         btn_cerrarSesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lb_fechaSys = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_historial = new javax.swing.JTable();
         btn_actualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,24 +134,15 @@ public class HistorialUI extends javax.swing.JFrame {
         });
         jToolBar1.add(btn_cerrarSesion);
 
-        jLabel1.setText("Fecha de ultima operación :");
+        jLabel1.setText("Fecha de ultima actualización :");
 
-        jLabel2.setText("jLabel2");
+        lb_fechaSys.setText("jLabel2");
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_historial.setAutoCreateRowSorter(true);
+        tbl_historial.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tbl_historial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo Transacción", "Cuenta Origen", "Monto operación", "Cuenta Destino", "Fecha y Hora"
@@ -118,11 +156,16 @@ public class HistorialUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_historial);
 
         btn_actualizar.setBackground(new java.awt.Color(0, 153, 255));
-        btn_actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bank/img/refresh.png"))); // NOI18N
         btn_actualizar.setText("Actualizar");
+        btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_actualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +179,7 @@ public class HistorialUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_fechaSys, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -151,7 +194,7 @@ public class HistorialUI extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lb_fechaSys))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -186,6 +229,12 @@ public class HistorialUI extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_btn_cerrarSesionActionPerformed
 
+    private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
+        DefaultTableModel tableModel = (DefaultTableModel) tbl_historial.getModel();
+        tableModel.setRowCount(0);
+        getHistorial(cliente.getNumeroCuenta());
+    }//GEN-LAST:event_btn_actualizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_actualizar;
     private javax.swing.JButton btn_cerrarSesion;
@@ -193,9 +242,9 @@ public class HistorialUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_inicio;
     private javax.swing.JButton btn_transferencia;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lb_fechaSys;
+    private javax.swing.JTable tbl_historial;
     // End of variables declaration//GEN-END:variables
 }
