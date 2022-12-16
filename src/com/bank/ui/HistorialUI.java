@@ -2,6 +2,7 @@ package com.bank.ui;
 
 import com.bank.negocio.Cliente;
 import com.bank.negocio.Cuenta;
+import com.bank.negocio.Historial;
 import com.bank.operaciones.FuncionesMenu;
 
 public class HistorialUI extends javax.swing.JFrame {
@@ -12,6 +13,10 @@ public class HistorialUI extends javax.swing.JFrame {
         cliente.getCliente(cliente.getRut(), cliente.getDv(), cliente.getClave());
         Cuenta cuenta = new Cuenta();
         cuenta.obtener(cliente.getNumeroCuenta());
+        
+        Historial historial = new Historial();
+        historial.obtener(cliente.getNumeroCuenta());
+        
         
     }
 
