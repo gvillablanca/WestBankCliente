@@ -1,5 +1,6 @@
 package com.bank.accesoDatos;
 
+import com.bank.negocio.Historial;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,4 +27,23 @@ public class HistorialDA {
             return null;
         } 
     }
+        
+    public int insertHistorial(Historial historial){
+        DBConnect dbCtx = new DBConnect(); 
+        String st = "INSERT INTO HISTORIAL_CLIENTE(NUMERO_CUENTA, MONTO, NUMERO_CUENTA_DES)\n" +
+                    "VALUES(?, ?, ?)";
+        int rs;
+        try{
+            PreparedStatement pst = dbCtx.getConnection().prepareStatement(st);
+            pst.setInt(1, historial.getNumeroCuenta());
+            pst.setInt(2, historial.getMonto());
+            pst.setInt(3, historial.getNumeroCuentaDestino());             
+            rs=pst.executeUpdate();
+            return rs;
+        }
+        catch(SQLException e){
+            System.out.println("error: " + e.getMessage());
+            return 0;
+        }        
+    } 
 }

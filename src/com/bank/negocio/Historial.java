@@ -87,4 +87,18 @@ public class Historial {
         }
     }
     
+    public boolean insertarHistorial(int numero_cuenta,int monto ,int numeroCuentaDestino){
+        this.setNumeroCuenta(numero_cuenta);
+        this.setMonto(monto);
+        this.setNumeroCuentaDestino(numeroCuentaDestino);
+        
+        int reg = new HistorialDA().insertHistorial(this);
+        
+        if(reg == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

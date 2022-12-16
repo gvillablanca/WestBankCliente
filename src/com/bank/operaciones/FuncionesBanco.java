@@ -104,6 +104,25 @@ public class FuncionesBanco {
         }
     }
     
+    public static boolean verificarCuenta(String numeroCuenta){
+        try{
+            int numeroCuentaInt = Integer.parseInt(numeroCuenta);
+            Cuenta cuenta = new Cuenta();
+            cuenta.obtener(numeroCuentaInt);
+                     
+            if(cuenta.getNumeroCuenta() != 0){
+                return true;
+            }
+            else{
+                return false;
+            }            
+        }
+        catch(NullPointerException e){
+            System.out.println("error: " + e);
+            return false;
+        }
+    }
+    
     public static boolean transferenciaCuenta(String numeroCuenta, int monto, String informacion){
         try{
             int numeroCuentaInt = Integer.parseInt(numeroCuenta);
@@ -147,6 +166,18 @@ public class FuncionesBanco {
         }
         catch(NullPointerException e){
             System.out.println("error: " + e);
+            return false;
+        }
+    }
+    
+    public static boolean actualizarHistorial(int numeroCuenta, int montoTransaccion, int numeroCuentaDestino){
+        Historial historial = new Historial();
+        boolean rsHistorial = historial.insertarHistorial(numeroCuenta, montoTransaccion, numeroCuentaDestino);
+        
+        if(rsHistorial){
+            return true;
+        }
+        else{
             return false;
         }
     }
