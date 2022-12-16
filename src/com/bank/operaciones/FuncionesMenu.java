@@ -1,5 +1,6 @@
 package com.bank.operaciones;
 
+import com.bank.negocio.Cliente;
 import com.bank.ui.Historial;
 import com.bank.ui.Inicio;
 import com.bank.ui.Login;
@@ -14,24 +15,24 @@ public class FuncionesMenu {
         login.setVisible(true);        
     }
     
-    public void inicio(){
-        Inicio home = new Inicio();  
+    public void inicio(Cliente cliente){
+        Inicio home = new Inicio(cliente);  
         home.setTitle("Inicio");
         home.setResizable(true);
         home.setLocationRelativeTo(null);
         home.setVisible(true);        
     }
     
-    public void transferencia(){
-        Transferencia transferencia = new Transferencia();  
+    public void transferencia(Cliente cliente){
+        Transferencia transferencia = new Transferencia(cliente);  
         transferencia.setTitle("Transferencias");
         transferencia.setResizable(true);
         transferencia.setLocationRelativeTo(null);
         transferencia.setVisible(true);        
     }
     
-    public void historial(){
-        Historial historial = new Historial();  
+    public void historial(Cliente cliente){
+        Historial historial = new Historial(cliente);  
         historial.setTitle("Historial de transacciones");
         historial.setResizable(true);
         historial.setLocationRelativeTo(null);

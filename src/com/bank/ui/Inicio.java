@@ -1,14 +1,22 @@
 package com.bank.ui;
 
 import com.bank.negocio.Cliente;
-import com.bank.operaciones.FuncionesBanco;
+import com.bank.negocio.Cuenta;
 import com.bank.operaciones.FuncionesMenu;
 
 public class Inicio extends javax.swing.JFrame {
-    public Inicio() {
-        Cliente cliente = new Cliente();
-        
+    Cliente cliente;
+    
+    public Inicio(Cliente cliente) {        
+        this.cliente = cliente;
         initComponents();
+        cliente.getCliente(cliente.getRut(), cliente.getDv(), cliente.getClave());
+        lb_nombreCliente.setText(cliente.getNombre()+" " + cliente.getApellidoPaterno() + " " + cliente.getApellidoMaterno());
+        lb_tipoCuenta.setText(cliente.getTipoCuenta()+ " : " + cliente.getNumeroCuenta());
+        Cuenta cuenta = new Cuenta();
+        cuenta.obtener(cliente.getNumeroCuenta());
+        lb_SaldoCuenta.setText(Integer.toString(cuenta.getSaldoCuenta()));
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -80,15 +88,15 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bank/img/BIENVENIDO_WESTBANK.png"))); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(234, 236, 236));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lb_nombreCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lb_nombreCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_nombreCliente.setText("Fulanito x");
+        lb_nombreCliente.setText("nombre");
 
         lb_tipoCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_tipoCuenta.setText("cuenta corriente :");
+        lb_tipoCuenta.setText("cuenta corriente : numero de cuenta");
 
         jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -102,14 +110,14 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_nombreCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_tipoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lb_tipoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                             .addComponent(lb_SaldoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -182,13 +190,13 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btn_transferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transferenciaActionPerformed
         FuncionesMenu menu = new FuncionesMenu();
-        menu.transferencia();
+        menu.transferencia(cliente);
         this.dispose(); 
     }//GEN-LAST:event_btn_transferenciaActionPerformed
 
     private void btn_historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_historialActionPerformed
         FuncionesMenu menu = new FuncionesMenu();
-        menu.historial();
+        menu.historial(cliente);
         this.dispose(); 
     }//GEN-LAST:event_btn_historialActionPerformed
 

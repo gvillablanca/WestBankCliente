@@ -1,5 +1,6 @@
 package com.bank.ui;
 
+import com.bank.negocio.Cliente;
 import com.bank.operaciones.FuncionesBanco;
 import com.bank.operaciones.FuncionesMenu;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("Contraseña            :");
 
         btn_salir.setBackground(new java.awt.Color(255, 51, 51));
-        btn_salir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bank/img/close.png"))); // NOI18N
         btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,7 +48,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         btn_login.setBackground(new java.awt.Color(0, 153, 255));
-        btn_login.setForeground(new java.awt.Color(255, 255, 255));
+        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bank/img/login.png"))); // NOI18N
         btn_login.setText("Login");
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,15 +125,23 @@ public class Login extends javax.swing.JFrame {
         String rut = txf_rut.getText();
         String dv = txf_dv.getText();
         String clave = txf_clave.getText();
-        
-        if(FuncionesBanco.loginCliente(rut, dv, clave)){
-            FuncionesMenu menu = new FuncionesMenu();
-            menu.inicio();
-            this.dispose(); 
+        Cliente cliente = new Cliente();        
+        if(!rut.isEmpty() && !dv.isEmpty() && !clave.isEmpty()){
+            if(FuncionesBanco.loginCliente(rut, dv, clave)){
+                FuncionesMenu menu = new FuncionesMenu();
+                int rutInt = Integer.parseInt(rut);
+                cliente.getCliente(rutInt, dv, clave);
+                menu.inicio(cliente);
+                this.dispose(); 
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Usuario/password incorrectas", "Advertencia", JOptionPane.OK_OPTION);
+            } 
         }
         else{
             JOptionPane.showMessageDialog(null, "Usuario/password incorrectas", "Advertencia", JOptionPane.OK_OPTION);
         }
+            
         
     }//GEN-LAST:event_btn_loginActionPerformed
 

@@ -1,10 +1,12 @@
 package com.bank.ui;
 
+import com.bank.negocio.Cliente;
 import com.bank.operaciones.FuncionesMenu;
 
 public class Historial extends javax.swing.JFrame {
-
-    public Historial() {
+    Cliente cliente;
+    public Historial(Cliente cliente) {
+        this.cliente = cliente;
         initComponents();
     }
 
@@ -152,19 +154,19 @@ public class Historial extends javax.swing.JFrame {
 
     private void btn_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inicioActionPerformed
         FuncionesMenu menu = new FuncionesMenu();
-        menu.inicio();
+        menu.inicio(cliente);
         this.dispose(); 
     }//GEN-LAST:event_btn_inicioActionPerformed
 
     private void btn_transferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transferenciaActionPerformed
         FuncionesMenu menu = new FuncionesMenu();
-        menu.transferencia();
+        menu.transferencia(cliente);
         this.dispose(); 
     }//GEN-LAST:event_btn_transferenciaActionPerformed
 
     private void btn_historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_historialActionPerformed
         FuncionesMenu menu = new FuncionesMenu();
-        menu.historial();
+        menu.historial(cliente);
         this.dispose(); 
     }//GEN-LAST:event_btn_historialActionPerformed
 
