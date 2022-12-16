@@ -17,6 +17,8 @@ public class Transferencia extends javax.swing.JFrame {
         lb_nombreCliente.setText(cliente.getNombre()+" " + cliente.getApellidoPaterno() + " " + cliente.getApellidoMaterno());
         lb_numeroCuenta.setText(cliente.getTipoCuenta()+ " - " + cliente.getNumeroCuenta());
         txf_montoTransferencia.setEnabled(false);
+        
+        //si la cuenta es de tipo cuenta de ahorro, bloquear txf de cuenta destino e indicar en un label que ese tipo de cuenta no puede realizar transferencias
     }
 
     @SuppressWarnings("unchecked")
@@ -177,7 +179,7 @@ public class Transferencia extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 41, Short.MAX_VALUE)
+                .addGap(18, 21, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lb_nombreCliente)
@@ -199,7 +201,7 @@ public class Transferencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_transferir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_nuevaTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();

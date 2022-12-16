@@ -1,7 +1,7 @@
 package com.bank.operaciones;
 
 import com.bank.negocio.Cliente;
-import com.bank.ui.Historial;
+import com.bank.ui.HistorialUI;
 import com.bank.ui.Inicio;
 import com.bank.ui.Login;
 import com.bank.ui.Transferencia;
@@ -32,7 +32,7 @@ public class FuncionesMenu {
     }
     
     public void historial(Cliente cliente){
-        Historial historial = new Historial(cliente);  
+        HistorialUI historial = new HistorialUI(cliente);  
         historial.setTitle("Historial de transacciones");
         historial.setResizable(true);
         historial.setLocationRelativeTo(null);

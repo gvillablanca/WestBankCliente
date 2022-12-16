@@ -47,18 +47,25 @@ public class FuncionesBanco {
     
     public static boolean loginCliente(String rut, String dv, String clave){
         try{
-            int rutInt = Integer.parseInt(rut);
+            if(isNumeric(rut)){
+                int rutInt = Integer.parseInt(rut);
             
-            Cliente cliente = new Cliente();
-            cliente.getCliente(rutInt, dv, clave);
-                    
-            if(cliente != null){
-                System.out.println(cliente); 
-                return true;
+                Cliente cliente = new Cliente();
+                cliente.getCliente(rutInt, dv, clave);
+
+                if(cliente.getRut() != 0){
+                    System.out.println(cliente); 
+                    return true;
+                }
+                else{
+                    return false;
+                }            
             }
             else{
+                JOptionPane.showMessageDialog(null, "Ingrese rut numerico", "Advertencia", JOptionPane.OK_OPTION);
                 return false;
-            }            
+            }
+            
         }
         catch(NullPointerException e){
             System.out.println("error: " + e);
@@ -71,7 +78,7 @@ public class FuncionesBanco {
             Cuenta cuenta = new Cuenta();
             cuenta.obtener(numeroCuenta);
                      
-            if(cuenta != null){
+            if(cuenta.getNumeroCuenta() != 0){
                 System.out.println(cuenta);
                 return true;
             }
@@ -90,7 +97,7 @@ public class FuncionesBanco {
             Historial historial = new Historial();
             historial.obtener(numeroCuenta);
                       
-            if(historial != null){
+            if(historial.getNumeroCuenta()!= 0){
                 System.out.println(historial); 
                 return true;
             }

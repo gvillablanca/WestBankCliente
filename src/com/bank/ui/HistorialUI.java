@@ -4,14 +4,15 @@ import com.bank.negocio.Cliente;
 import com.bank.negocio.Cuenta;
 import com.bank.operaciones.FuncionesMenu;
 
-public class Historial extends javax.swing.JFrame {
+public class HistorialUI extends javax.swing.JFrame {
     Cliente cliente;
-    public Historial(Cliente cliente) {
+    public HistorialUI(Cliente cliente) {
         this.cliente = cliente;
         initComponents();
         cliente.getCliente(cliente.getRut(), cliente.getDv(), cliente.getClave());
         Cuenta cuenta = new Cuenta();
         cuenta.obtener(cliente.getNumeroCuenta());
+        
     }
 
     @SuppressWarnings("unchecked")
