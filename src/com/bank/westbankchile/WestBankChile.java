@@ -1,7 +1,6 @@
 package com.bank.westbankchile;
 
 import com.bank.operaciones.FuncionesMenu;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

@@ -1,5 +1,9 @@
 package com.bank.negocio;
 
+import com.bank.accesoDatos.ClienteDA;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class Cliente {
     int rut;
@@ -117,6 +121,38 @@ public class Cliente {
                 ", telefono=" + telefono +
                 ", numeroCuenta=" + numeroCuenta +
                 ", cuenta=" + tipoCuenta + '}';
+    }
+    
+    public Cliente getCliente(int rut, String dv, String clave){
+        ResultSet rs = new ClienteDA().verificarCliente(rut, dv, clave);
+        if(rs !=null){
+            try{
+                if(rs.next()){
+                    this.rut = rs.getInt("rut");
+                    this.dv = rs.getString("dv");
+                    this.clave = rs.getString("pass");
+                    this.nombre = rs.getString("nombre");
+                    this.apellidoPaterno = rs.getString("apellido_paterno");
+                    this.apellidoMaterno = rs.getString("apellido_materno");
+                    this.domicilio = rs.getString("domicilio");
+                    this.comuna = rs.getString("comuna");
+                    this.telefono = rs.getInt("telefono");
+                    this.tipoCuenta = rs.getString("tipo_cuenta");
+                    this.numeroCuenta = rs.getInt("numero_cuenta");
+                    return this;
+                }
+                else{
+                    System.out.println("Falló");
+                    return null;
+                }
+            }catch(SQLException ex) {
+                System.out.println("Falló" + ex);
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
     }
         
 }

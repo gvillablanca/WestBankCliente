@@ -1,5 +1,9 @@
 package com.bank.negocio;
 
+import com.bank.accesoDatos.HistorialDA;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class Historial {
     int codTrx;
@@ -55,6 +59,32 @@ public class Historial {
                 ", monto=" + monto +
                 ", numeroCuentaDestino=" + numeroCuentaDestino +
                 ", fechaTrx=" + fechaTrx + '}';
+    }
+    
+    public Historial obtener(int numero_cuenta){
+        ResultSet rs = new HistorialDA().getHistorial(numero_cuenta);
+        if(rs !=null){
+            try{
+                if(rs.next()){
+                    this.codTrx = rs.getInt("cod_trx");
+                    this.numeroCuenta = rs.getInt("numero_cuenta");
+                    this.monto = rs.getInt("monto");
+                    this.numeroCuentaDestino = rs.getInt("numero_cuenta_des");
+                    this.fechaTrx = rs.getString("fecha_trx");
+                    return this;
+                }
+                else{
+                    System.out.println("Falló");
+                    return null;
+                }
+            }catch(SQLException ex) {
+                System.out.println("Falló" + ex);
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
     }
     
 }
