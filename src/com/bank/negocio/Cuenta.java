@@ -65,4 +65,18 @@ public class Cuenta {
             return null;
         }
     }
+    
+    public boolean modificarSaldo(int saldo, int numero_cuenta){
+        this.setNumeroCuenta(numero_cuenta);
+        this.setSaldoCuenta(saldo);
+        
+        int reg = new CuentaDA().updateSaldo(this);
+        
+        if(reg == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

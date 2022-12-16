@@ -3,6 +3,7 @@ package com.bank.operaciones;
 import com.bank.negocio.Cliente;
 import com.bank.negocio.Cuenta;
 import com.bank.negocio.Historial;
+import javax.swing.JOptionPane;
 
 public class FuncionesBanco {
     public static boolean isNumeric(String cadena){
@@ -96,6 +97,53 @@ public class FuncionesBanco {
             else{
                 return false;
             }            
+        }
+        catch(NullPointerException e){
+            System.out.println("error: " + e);
+            return false;
+        }
+    }
+    
+    public static boolean transferenciaCuenta(String numeroCuenta, int monto, String informacion){
+        try{
+            int numeroCuentaInt = Integer.parseInt(numeroCuenta);
+            
+            Cuenta cuenta = new Cuenta();
+            cuenta.obtener(numeroCuentaInt);
+            
+            if(cuenta != null){
+                if(informacion.equals("O")){                
+                    if(cuenta.getSaldoCuenta()> 0 && cuenta.getSaldoCuenta()>= monto){
+                        int saldoOrigenNuevo = cuenta.getSaldoCuenta()- monto;
+                        if(cuenta.modificarSaldo(saldoOrigenNuevo, numeroCuentaInt)){
+                            return true; 
+                        }
+                        else{
+                            return false;
+                        }                         
+                    }
+                    else{
+                       JOptionPane.showMessageDialog(null, "Saldo insuficiente para transferencia", "Advertencia", JOptionPane.OK_OPTION);
+                       return false; 
+                    }                    
+                }
+                else if(informacion.equals("D")){          
+                    int saldoDestinoNuevo = cuenta.getSaldoCuenta()+ monto;
+                    if(cuenta.modificarSaldo(saldoDestinoNuevo, numeroCuentaInt)){
+                        return true; 
+                    }
+                    else{
+                        return false;
+                    } 
+                }
+                else{
+                   JOptionPane.showMessageDialog(null, "Error en sistema, volver a intentar nuevamente", "Advertencia", JOptionPane.OK_OPTION);
+                   return false;  
+                }    
+            }
+            else{
+               return false; 
+            }   
         }
         catch(NullPointerException e){
             System.out.println("error: " + e);

@@ -1,6 +1,7 @@
 package com.bank.ui;
 
 import com.bank.negocio.Cliente;
+import com.bank.negocio.Cuenta;
 import com.bank.operaciones.FuncionesMenu;
 
 public class Transferencia extends javax.swing.JFrame {
@@ -8,6 +9,9 @@ public class Transferencia extends javax.swing.JFrame {
     public Transferencia(Cliente cliente) {
         this.cliente = cliente;
         initComponents();
+        cliente.getCliente(cliente.getRut(), cliente.getDv(), cliente.getClave());
+        Cuenta cuenta = new Cuenta();
+        cuenta.obtener(cliente.getNumeroCuenta());
     }
 
     @SuppressWarnings("unchecked")
