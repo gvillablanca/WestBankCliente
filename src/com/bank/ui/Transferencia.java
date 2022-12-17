@@ -17,6 +17,19 @@ public class Transferencia extends javax.swing.JFrame {
         lb_nombreCliente.setText(cliente.getNombre()+" " + cliente.getApellidoPaterno() + " " + cliente.getApellidoMaterno());
         lb_numeroCuenta.setText(cliente.getTipoCuenta()+ " - " + cliente.getNumeroCuenta());
         txf_montoTransferencia.setEnabled(false);
+        lb_estadoCuenta.setEnabled(false);
+        if(cliente.getTipoCuenta().equals("CUENTA DE AHORRO")){
+            txf_numeroCuentaDes.setEnabled(false);
+            btn_validar.setEnabled(false);
+            btn_transferir.setEnabled(false);
+            btn_nuevaTransferencia.setEnabled(false);
+            lb_estadoCuenta.setEnabled(false);
+            lb_estadoCuenta.setText("CUENTAS DE AHORRO NO PERMITEN TRANSFERENCIAS");
+        }
+        else{
+            txf_numeroCuentaDes.setEnabled(true);
+        }
+        
         
         //si la cuenta es de tipo cuenta de ahorro, bloquear txf de cuenta destino e indicar en un label que ese tipo de cuenta no puede realizar transferencias
     }
@@ -42,9 +55,10 @@ public class Transferencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        lb_estadoCuenta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(447, 404));
+        setPreferredSize(new java.awt.Dimension(447, 418));
         setResizable(false);
         setSize(new java.awt.Dimension(779, 565));
 
@@ -139,6 +153,12 @@ public class Transferencia extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Transferencias");
 
+        lb_estadoCuenta.setBackground(new java.awt.Color(0, 0, 0));
+        lb_estadoCuenta.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lb_estadoCuenta.setForeground(new java.awt.Color(255, 0, 51));
+        lb_estadoCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_estadoCuenta.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +170,7 @@ public class Transferencia extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(33, 33, 33)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(btn_nuevaTransferencia)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,7 +184,8 @@ public class Transferencia extends javax.swing.JFrame {
                                         .addComponent(jLabel4))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btn_validar))
-                                .addComponent(lb_numeroCuenta))))
+                                .addComponent(lb_numeroCuenta)
+                                .addComponent(lb_estadoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -179,7 +200,7 @@ public class Transferencia extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(18, 21, Short.MAX_VALUE)
+                .addGap(18, 28, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lb_nombreCliente)
@@ -201,7 +222,9 @@ public class Transferencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_transferir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_nuevaTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lb_estadoCuenta)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -307,6 +330,7 @@ public class Transferencia extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lb_estadoCuenta;
     private javax.swing.JLabel lb_nombreCliente;
     private javax.swing.JLabel lb_numeroCuenta;
     private javax.swing.JTextField txf_montoTransferencia;
